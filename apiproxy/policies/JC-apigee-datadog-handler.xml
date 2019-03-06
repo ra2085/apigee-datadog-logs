@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<JavaCallout name="JC-apigee-datadog-handler">
+        <ClassName>com.google.apigee.DatadogHandler</ClassName>
+        <ResourceURL>java://apigee-datadog-logs.jar</ResourceURL>
+</JavaCallout>
