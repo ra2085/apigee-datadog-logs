@@ -43,7 +43,7 @@ public class DatadogHandler implements Execution {
 
         try{
             Map.Entry<Long, BufferedWriter> socket = socketPool.borrowObject();
-            socket.getValue().write("57e873ac5bc61a25a9dad68fb942e2db hello from apigee 2!");
+            socket.getValue().write("<keygoeshere> hello from apigee!");
             socket.getValue().newLine();
             socket.getValue().flush();
             try{socket.getValue().close();} catch (Exception ex){}
