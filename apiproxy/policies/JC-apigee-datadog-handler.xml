@@ -2,4 +2,7 @@
 <JavaCallout name="JC-apigee-datadog-handler">
         <ClassName>com.google.apigee.DatadogHandler</ClassName>
         <ResourceURL>java://apigee-datadog-logs.jar</ResourceURL>
+        <Properties>
+            <Property name="log-message-var-name">flow.variable.name.goes.here</Property>
+        </Properties>
 </JavaCallout>

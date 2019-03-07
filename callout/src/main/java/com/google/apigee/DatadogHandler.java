@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class DatadogHandler implements Execution {
 
-    protected static ObjectPool<Map.Entry<Long, BufferedWriter>> socketPool;
+    private static final ObjectPool<Map.Entry<Long, BufferedWriter>> socketPool;
 
     static {
 
@@ -39,11 +39,18 @@ public class DatadogHandler implements Execution {
 
     }
 
+    private final Map<String, String> props;
+
+    public DatadogHandler(Map<String, String> props){
+        this.props = props;
+    }
+
 	public ExecutionResult execute(MessageContext messageContext, ExecutionContext executionContext) {
 
         try{
             Map.Entry<Long, BufferedWriter> socket = socketPool.borrowObject();
-            socket.getValue().write("<keygoeshere> hello from apigee!");
+            String message = messageContext.getVariable(props.get("log-message-var-name"));
+            socket.getValue().write(message);
             socket.getValue().newLine();
             socket.getValue().flush();
             try{socket.getValue().close();} catch (Exception ex){}
