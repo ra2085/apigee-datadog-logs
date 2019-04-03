@@ -7,7 +7,8 @@ import com.apigee.flow.message.MessageContext;
 
 import java.io.BufferedWriter;
 import java.io.OutputStreamWriter;
-import java.net.Socket;
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
 import java.util.AbstractMap;
 import java.util.Map;
 
@@ -21,7 +22,9 @@ public class DatadogHandler implements Execution {
         socketPool = new ObjectPool<Map.Entry<Long, BufferedWriter>>(20, 20, 500L) {
             @Override
             protected Map.Entry<Long, BufferedWriter> createObject() throws  Exception{
-                Socket clientSocket = new Socket("intake.logs.datadoghq.com", 10514);
+                SSLSocketFactory sslsocketfactory = (SSLSocketFactory) SSLSocketFactory.getDefault();
+                SSLSocket clientSocket = (SSLSocket) sslsocketfactory.createSocket("intake.logs.datadoghq.com", 10516);
+                
                 BufferedWriter outToServer = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
                 Long expiration = System.currentTimeMillis() + 18000;
                 Map.Entry<Long, BufferedWriter> entry = new AbstractMap.SimpleEntry<Long, BufferedWriter>(expiration, outToServer);
